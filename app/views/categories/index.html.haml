@@ -1,0 +1,21 @@
+.container.p-y-3
+  %header.m-b-1
+    %h2.font-weight-bold カテゴリー一覧
+
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        %th #
+        %th カテゴリー名
+        %th URL
+        %th
+        %th
+    %tbody
+      - @categories.each do |category|
+        %tr
+          %td= catefory.id
+          %td= category.name
+          %td= category.slug
+          %td= link_to '編集', edit_category_path(category)
+          %td= link_to '削除', category, method: :delete, data: { confirm: "本当によろしいですか？" }
+  = link_to '新しいカテゴリーを作る', new_category_path, class: "btn btn-sm btn-primary"

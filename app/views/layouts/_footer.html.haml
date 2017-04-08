@@ -1,0 +1,9 @@
+%footer
+  .container.clearfix
+    .pull-xs-left.brand.f-logo.m-t-1 literal
+    .pull-xs-right
+      %ul.list-inline.m-y-1
+        %li.list-inline-item= link_to "ログイン", new_user_session_path
+        %li.list-inline-item= link_to "ユーザー一覧", users_path if user_signed_in? && current_user.admin?
+        %li.list-inline-item= link_to "カテゴリー一覧", categories_path if user_signed_in? && current_user.admin?
+        %li.list-inline-item= link_to "記事一覧", articles_path if user_signed_in?

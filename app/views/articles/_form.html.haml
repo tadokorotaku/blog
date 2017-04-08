@@ -1,0 +1,36 @@
+= form_for @article do |f|
+  - if @article.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@article.errors.count, "error")} prohibited this article from being saved:"
+      %ul
+        - @article.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row
+    .col-md-8
+      .field.m-b-2
+        = f.label :title
+        = f.text_field :title, class: "form-control", required: true
+      .field.m-b-2
+        = f.label :slug
+        .input-group
+          %span.input-group-addon= "#{articles_url}/"
+          = f.text_field :slug, class: "form-control", required: true
+      .field.m-b-2
+        = f.label :content
+        = f.text_area :content, class: "form-control", required: true
+
+    .col-md-4
+      .field.m-b-2
+        = f.label :category_id
+        = f.collection_select :category_id, Category.order(name: :asc), :id, :name, { prompt: "選択してください" }, class: "form-control", required: true
+      .field.m-b-2
+        = f.label :published_at
+        %br
+        = f.datetime_select :published_at, {use_month_numbers: true}, {class: "form-control select-form-control"}
+      .field.m-b-2
+        = f.check_box :published
+        %span= f.label :published, "ストーリーを公開する"
+      .actions
+        = f.submit '保存する', class: "btn btn-sm btn-primary"
+        = link_to '戻る', articles_path, class: "btn btn-sm btn-secondary"

@@ -1,0 +1,30 @@
+.container.p-y-3
+  %header.m-b-1
+    %h2.font-weight-bold 記事一覧
+
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        %th #
+        %th カテゴリー名
+        %th ユーザー名
+        %th タイトル
+        %th ステータス
+        %th 公開日時
+        %th
+        %th
+        %th
+    %tbody
+      - @articles.each do |article|
+        %tr
+          %td= article.id
+          %td= article.category.name
+          %td= article.user.name
+          %td= article.title
+          %td= article.published? ? "公開中" : "非公開"
+          %td= article.published_at.strftime('%Y-%-m%-d %H:%M')
+          %td= link_to '表示', article_path(article.slug)
+          %td= link_to '編集', edit_article_path(article.slug), data: {no_turbolink: true} if article.user == current_user
+          %td= link_to '削除', article_path(article.slug), method: :delete, data: { confirm: "本当によろしいですか？" } if article.user == current_user
+
+  = link_to '新しい記事を書く', new_article_path, class: "btn btn-sm btn-primary", data: {no_turbolink: true}
